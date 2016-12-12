@@ -41,12 +41,12 @@ instr = {
 	"jnz": jump
 }
 
-# Part 1
-# -----------------------------
 with open("input.txt", "r") as f:
 	for line in f:
 		lines.append(line.replace("\n", ""))
 
+# Part 1
+# -----------------------------
 while currLine < len(lines):
 	split = lines[currLine].split(" ")
 	instr[split[0]](split[1:])

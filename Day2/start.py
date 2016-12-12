@@ -9,13 +9,9 @@ y = 1
 resPt1 = ""
 resPt2 = ""
 
-# RUDULRLLU U L RU RDDR R UDUR ULLLDRLRLUDDLUDUDDUDRRDUDULDUUULLRULLRLDDLDLDDRLRRRRUD
-# 636323211 1 1 22 3699 9 6966
 
-  # 1 2 3
-  # 4 5 6
-  # 7 8 9
-
+# Part 1
+# ---------------------------------------
 def parseChar(ch):
 	global x, y
 	if ch.isalpha():
@@ -28,7 +24,7 @@ def parseChar(ch):
 		elif ch == "R" and x < 2:
 			x += 1
 
-# Part 1
+
 with open("input.txt", "r") as f:
 	for line in f:
 		for c in line:
@@ -40,6 +36,7 @@ with open("output_part1.txt", "w") as o:
 
 
 # Part 2
+# ---------------------------------------
 def parseChar2(ch):
 	global x, y
 	if ch.isalpha():

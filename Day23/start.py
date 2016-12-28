@@ -33,12 +33,15 @@ def jump(args):
 	global currLine, data
 	try:
 		if int(args[0]) != 0:
-			currLine += int(args[1]) - 1		# -1 to compensate +1 in the loop
+			currLine += int(args[1]) - 1			# -1 to compensate +1 in the loop
 	except ValueError:
 		if not args[0] in data:
 			data[args[0]] = 0
 		if data[args[0]] != 0:
-			currLine += int(args[1]) - 1		# -1 to compensate +1 in the loop
+			try:
+				currLine += int(args[1]) - 1		# -1 to compensate +1 in the loop
+			except ValueError:
+				currLine += data[args[1]] - 1		# -1 to compensate +1 in the loop
 
 def togl(args):
 	global currLine, data, lines
@@ -48,6 +51,9 @@ def togl(args):
 		editLine = currLine + int(args[0])
 	except ValueError:
 		editLine = currLine + data[args[0]]
+
+
+	print(editLine)
 
 	if editLine >= 0 and editLine < len(lines):
 		split = lines[editLine].split()
@@ -78,11 +84,23 @@ with open("input.txt", "r") as f:
 
 # Part 1
 # -----------------------------
+counter = 0
 tte = int(round(time.time() * 1000))
-while currLine < len(lines):
-	split = lines[currLine].split(" ")
-	instr[split[0]](split[1:])
-	currLine += 1
+
+
+try:
+	while currLine < len(lines):
+		split = lines[currLine].split(" ")
+		print(str(currLine) + ": " + lines[currLine])
+		instr[split[0]](split[1:])
+		counter += 1
+		currLine += 1
+except:
+	for line in lines:
+		print(line)
+	print("DATA")
+	for d in data:
+		print(d)
 
 with open("output_part1.txt", "w") as o:
 	o.write(str(data["a"]))

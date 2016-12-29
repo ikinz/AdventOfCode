@@ -4,6 +4,17 @@ currLine = 0
 data = {"a":7}
 lines = []
 
+def getData(var):
+	global data
+	if var in data:
+		return data[var]
+	else:
+		try:
+			return int(var)
+		except ValueError:
+			data[var] = 0
+			return data[var]
+
 def copy(args):
 	global data
 	if not args[1] in data:
@@ -30,18 +41,10 @@ def decr(args):
 	data[args[0]] -= 1
 
 def jump(args):
-	global currLine, data
-	try:
-		if int(args[0]) != 0:
-			currLine += int(args[1]) - 1			# -1 to compensate +1 in the loop
-	except ValueError:
-		if not args[0] in data:
-			data[args[0]] = 0
-		if data[args[0]] != 0:
-			try:
-				currLine += int(args[1]) - 1		# -1 to compensate +1 in the loop
-			except ValueError:
-				currLine += data[args[1]] - 1		# -1 to compensate +1 in the loop
+	global currLine
+
+	if getData(args[0]) != 0:
+		currLine += getData(args[1]) - 1
 
 def togl(args):
 	global currLine, data, lines

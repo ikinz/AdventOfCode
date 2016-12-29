@@ -40,6 +40,10 @@ def decr(args):
 		data[args[0]] = 0
 	data[args[0]] -= 1
 
+def mult(args):
+	global data
+	data[args[2]] = getData(args[0]) * getData(args[1])
+
 def jump(args):
 	global currLine
 
@@ -54,9 +58,6 @@ def togl(args):
 		editLine = currLine + int(args[0])
 	except ValueError:
 		editLine = currLine + data[args[0]]
-
-
-	print(editLine)
 
 	if editLine >= 0 and editLine < len(lines):
 		split = lines[editLine].split()
@@ -73,12 +74,17 @@ def togl(args):
 		newLine = " ".join(split)
 		lines[editLine] = newLine
 
+def nop(args):
+	pass
+
 instr = {
 	"cpy": copy,
 	"inc": incr,
 	"dec": decr,
+	"mul": mult,
 	"jnz": jump,
-	"tgl": togl
+	"tgl": togl,
+	"nop": nop
 }
 
 with open("input.txt", "r") as f:
@@ -88,13 +94,10 @@ with open("input.txt", "r") as f:
 # Part 1
 # -----------------------------
 counter = 0
-tte = int(round(time.time() * 1000))
-
 
 try:
 	while currLine < len(lines):
 		split = lines[currLine].split(" ")
-		print(str(currLine) + ": " + lines[currLine])
 		instr[split[0]](split[1:])
 		counter += 1
 		currLine += 1
@@ -108,20 +111,30 @@ except:
 with open("output_part1.txt", "w") as o:
 	o.write(str(data["a"]))
 
-print("Runtime: " + str(int(round(time.time() * 1000)) - tte))
-
+print("Part1: " + str(data["a"]))
 
 # Part 2
 # -----------------------------
-'''
-currLine = 0
-data = {"c": 1}
+lines = []
+with open("inputpt2.txt", "r") as f:
+	for line in f:
+		lines.append(line.replace("\n", ""))
 
-while currLine < len(lines):
-	split = lines[currLine].split(" ")
-	instr[split[0]](split[1:])
-	currLine += 1
+currLine = 0
+data = {"a": 12}
+
+try:
+	while currLine < len(lines):
+		split = lines[currLine].split(" ")
+		instr[split[0]](split[1:])
+		counter += 1
+		currLine += 1
+except:
+	for line in lines:
+		print(line)
+	print("DATA")
+	for d in data:
+		print(d)
 
 with open("output_part2.txt", "w") as o:
 	o.write(str(data["a"]))
-'''
